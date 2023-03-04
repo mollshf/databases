@@ -1,4 +1,4 @@
 <?php
-include 'function_barang.php';
+require 'function_barang.php';
 echo json_encode(create());
 ?>

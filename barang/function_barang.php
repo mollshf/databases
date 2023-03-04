@@ -79,6 +79,7 @@ function update()
     global $conn;
     if (
         (empty($_POST["id_user"]) && $_POST["id_user"] != 0) ||
+        empty($_POST["id_barang"]) ||
         empty($_POST["barcode"]) ||
         empty($_POST["nama_barang"]) ||
         empty($_POST["kategori"]) ||
@@ -96,13 +97,14 @@ function update()
 
     $id_user = mysqli_escape_string($conn, $_POST["id_user"]);
     $barcode = mysqli_escape_string($conn, $_POST["barcode"]);
+    $id_barang = mysqli_escape_string($conn, $_POST["id_barang"]);
     $nama_barang = mysqli_escape_string($conn, $_POST["nama_barang"]);
     $kategori = mysqli_escape_string($conn, $_POST["kategori"]);
     $harga_beli = mysqli_escape_string($conn, $_POST["harga_beli"]);
     $harga_jual = mysqli_escape_string($conn, $_POST["harga_jual"]);
     $stok = mysqli_escape_string($conn, $_POST["stok"]);
 
-    $query = "UPDATE barang SET id_user='$id_user', barcode='$barcode', nama_barang='$nama_barang', kategori='$kategori', harga_beli ='$harga_beli', harga_jual = $harga_jual', stok ='$stok' WHERE id_barang";
+    $query = "UPDATE barang SET id_user='$id_user', barcode='$barcode', nama_barang='$nama_barang', kategori='$kategori', harga_beli ='$harga_beli', harga_jual = '$harga_jual', stok ='$stok' WHERE id_barang = $id_barang";
 
     if (mysqli_query($conn, $query)) {
         http_response_code(200);
@@ -120,4 +122,6 @@ function update()
 
     return $respon;
 }
+
+
 ?>
