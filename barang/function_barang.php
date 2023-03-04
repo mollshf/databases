@@ -4,8 +4,7 @@ $conn = mysqli_connect("localhost", "root", "", "db_tes_catatan");
 function read()
 {
     global $conn;
-    $nama = $_POST["nama"];
-    $query = "SELECT * FROM barang WHERE nama_barang LIKE '%$nama%'";
+    $query = "SELECT * FROM barang";
     $result = mysqli_query($conn, $query);
 
     if (mysqli_affected_rows($conn) <= 0) {
@@ -67,8 +66,11 @@ function create()
             "status" => "yp"
         ];
     }
-
-    return $respon;
+    $composition = [
+        "status" => $respon,
+        "data" => $query
+    ];
+    return $composition;
 }
 
 function update()
