@@ -44,6 +44,7 @@ function create()
     // sanitasi
 
     $id_user = mysqli_escape_string($conn, $_POST["id_user"]);
+    $nama_barang = mysqli_escape_string($conn, $_POST["nama_barang"]);
     $barcode = mysqli_escape_string($conn, $_POST["barcode"]);
     $kategori = mysqli_escape_string($conn, $_POST["kategori"]);
     $harga_beli = mysqli_escape_string($conn, $_POST["harga_beli"]);
@@ -51,7 +52,7 @@ function create()
     $stok = mysqli_escape_string($conn, $_POST["stok"]);
 
 
-    $query = "INSERT INTO barang (id_user, barcode, kategori, harga_beli, harga_jual, stok) VALUES ('$id_user', '$barcode', '$kategori', '$harga_beli', '$harga_jual', '$stok')";
+    $query = "INSERT INTO barang (id_user, barcode, nama_barang, kategori, harga_beli, harga_jual, stok) VALUES ('$id_user', '$barcode', '$nama_barang', '$kategori', '$harga_beli', '$harga_jual', '$stok')";
 
     if (mysqli_query($conn, $query)) {
         http_response_code(200);
@@ -123,5 +124,30 @@ function update()
     return $respon;
 }
 
+function delete()
+{
 
+    global $conn;
+    // memastikan inputan data yang ingin di hapus tidak kosong
+    if (empty($_POST["id_barang"])) {
+        $respon = [
+            "message" => "tolong input id barang yang ingin di hapus",
+            "status" => "FAILED"
+        ];
+    } else {
+        $affectedRows = mysqli_affected_rows($conn);
+        $respon = [
+            "message" => "Data berhasil di hapus '$affectedRows'",
+            "status" => "SUCCESS"
+        ];
+    }
+    // sanitasi
+    $id = mysqli_escape_string($conn, $_POST["id_barang"]);
+    // eksekusi
+    $query = "DELETE FROM barang WHERE id_barang = $id";
+    mysqli_query($conn, $query);
+    return $respon
+    ;
+
+}
 ?>
